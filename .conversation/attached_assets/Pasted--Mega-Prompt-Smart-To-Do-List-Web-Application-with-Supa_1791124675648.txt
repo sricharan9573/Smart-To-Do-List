@@ -1,0 +1,346 @@
+# Mega Prompt: Smart To-Do List Web Application with Supabase Backend
+
+Build a complete, modern, responsive **Smart To-Do List Web Application** with a professional user interface and a fully functional backend connected to **Supabase**.
+
+The application should be beginner-friendly to develop and maintain, but the final output should look like a polished, production-style productivity application.
+
+## 1. Technology Stack
+
+**Frontend:**
+- React.js with Vite.
+- HTML5, CSS3, and JavaScript.
+- Tailwind CSS for styling.
+- Lucide React for icons.
+
+**Backend and Database:**
+- Supabase for the backend.
+- Supabase PostgreSQL database for storing tasks and user profiles.
+- Supabase Authentication for user registration and login.
+- Supabase Row Level Security (RLS) to protect user data.
+- Supabase JavaScript client for frontend-to-backend communication.
+
+**Development environment:**
+- Replit for writing, running, and previewing the application.
+- Use environment variables to store Supabase credentials securely.
+
+## 2. UI and Design
+
+Create a premium, modern productivity dashboard inspired by Notion, Linear, and Todoist.
+
+**Design requirements:**
+- Clean and minimal interface.
+- Light theme with white, soft gray, and blue or purple accents.
+- Smooth animations and hover effects.
+- Rounded cards and subtle shadows.
+- Responsive layout for desktop, tablet, and mobile.
+- Sidebar navigation on desktop.
+- Collapsible navigation or bottom navigation on mobile.
+- Clear typography and consistent spacing.
+- Toast notifications for successful and failed operations.
+- Loading indicators and empty states.
+
+## 3. Authentication System
+
+Create a complete authentication system using Supabase Authentication.
+
+**Features:**
+- User registration with full name, email, and password.
+- User login with email and password.
+- Logout functionality.
+- Forgot password and password reset flow.
+- Session persistence after refreshing the page.
+- Protected dashboard accessible only to authenticated users.
+- Display the logged-in user's name and email.
+- Redirect unauthenticated users to the login page.
+
+Ensure that each user can only access their own tasks.
+
+## 4. Dashboard
+
+After login, display a personalized dashboard.
+
+**Dashboard components:**
+- Welcome message with the user's name.
+- Current date and a personalized greeting.
+- Total tasks.
+- Pending tasks.
+- Completed tasks.
+- Overdue tasks.
+- Tasks due today.
+- A progress bar displaying task completion percentage.
+- A quick-add task input.
+- A list of upcoming tasks.
+- A small productivity overview with a chart.
+
+All dashboard statistics must be calculated from actual task records retrieved from Supabase.
+
+## 5. Task Management (CRUD Operations)
+
+Implement complete CRUD operations using Supabase.
+
+**Create tasks:**
+- Task title.
+- Description.
+- Due date.
+- Due time (optional).
+- Priority: Low, Medium, High.
+- Category.
+- Status: Pending or Completed.
+- Optional reminder setting.
+
+**Read tasks:**
+- Fetch tasks belonging to the logged-in user.
+- Display tasks in a clean list or card layout.
+- Show priority labels, due dates, and status.
+- Organize tasks based on their due dates.
+
+**Update tasks:**
+- Edit task title and description.
+- Change due date and time.
+- Update priority and category.
+- Mark tasks as completed or pending.
+- Save changes immediately to Supabase.
+
+**Delete tasks:**
+- Allow users to delete individual tasks.
+- Display a confirmation dialog before deletion.
+- Update the UI after successful deletion.
+
+All operations must work with the actual Supabase database. Do not use static sample data as the application's primary storage.
+
+## 6. Task Categories and Filters
+
+Create the following categories:
+- Personal
+- College
+- Work
+- Projects
+- Other
+
+Allow users to:
+- Filter tasks by category.
+- Filter by priority.
+- Filter by status.
+- View tasks due today.
+- View upcoming tasks.
+- View overdue tasks.
+- Search tasks by title or description.
+- Sort tasks by due date, creation date, or priority.
+
+Filters should work together and update the task list dynamically.
+
+## 7. Calendar View
+
+Add a calendar section to the application.
+
+**Features:**
+- Monthly calendar view.
+- Display tasks on their respective due dates.
+- Click on a date to see its tasks.
+- Navigate between months.
+- Highlight today's date.
+- Allow users to add a task directly from a selected date.
+
+Calendar data must come from Supabase.
+
+## 8. Productivity Analytics
+
+Create a productivity analytics section with charts.
+
+**Features:**
+- Total completed tasks.
+- Total pending tasks.
+- Weekly task completion chart.
+- Category-wise task distribution.
+- Completion percentage.
+- Daily productivity summary.
+
+Use a chart library such as Recharts. Calculate the analytics using actual task data retrieved from Supabase.
+
+## 9. Supabase Database Structure
+
+Create the following database tables.
+
+### Table 1: profiles
+
+| Column | Type | Description |
+|---|---|---|
+| id | UUID | Primary key, references auth.users |
+| full_name | TEXT | User's full name |
+| created_at | TIMESTAMPTZ | Account creation time |
+
+### Table 2: tasks
+
+| Column | Type | Description |
+|---|---|---|
+| id | UUID | Primary key, generated automatically |
+| user_id | UUID | References auth.users |
+| title | TEXT | Task title |
+| description | TEXT | Task description |
+| due_date | DATE | Task due date |
+| due_time | TIME | Optional due time |
+| priority | TEXT | Low, Medium, High |
+| category | TEXT | Task category |
+| status | TEXT | Pending or Completed |
+| reminder_enabled | BOOLEAN | Whether a reminder is enabled |
+| created_at | TIMESTAMPTZ | Creation timestamp |
+| updated_at | TIMESTAMPTZ | Last update timestamp |
+
+Add suitable constraints, indexes, default values, and foreign keys.
+
+## 10. Supabase Security
+
+Configure Row Level Security for all user-specific data.
+
+**Security requirements:**
+- Enable RLS on the profiles and tasks tables.
+- Users can read only their own profiles and tasks.
+- Users can insert tasks only with their own user ID.
+- Users can update and delete only their own tasks.
+- Users cannot modify another user's records.
+- Use secure database policies based on `auth.uid()`.
+- Never expose the Supabase service role key in frontend code.
+- Store the Supabase project URL and anonymous/publishable key in Replit Secrets or environment variables.
+- Validate user input before sending it to the database.
+
+Provide the complete SQL script for creating the tables, indexes, triggers, and RLS policies.
+
+## 11. Backend Integration
+
+Create a dedicated Supabase configuration file.
+
+Suggested project structure:
+
+```text
+smart-todo-list/
+├── src/
+│   ├── components/
+│   │   ├── Sidebar.jsx
+│   │   ├── Header.jsx
+│   │   ├── TaskCard.jsx
+│   │   ├── TaskForm.jsx
+│   │   ├── TaskList.jsx
+│   │   ├── CalendarView.jsx
+│   │   └── Analytics.jsx
+│   ├── pages/
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   ├── Dashboard.jsx
+│   │   └── Settings.jsx
+│   ├── context/
+│   │   └── AuthContext.jsx
+│   ├── lib/
+│   │   └── supabase.js
+│   ├── services/
+│   │   └── taskService.js
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+├── .env.example
+├── package.json
+└── README.md
+```
+
+Implement reusable service functions for:
+- `createTask()`
+- `getTasks()`
+- `updateTask()`
+- `deleteTask()`
+- `toggleTaskStatus()`
+- `getTaskStatistics()`
+
+Use asynchronous operations with proper error handling. Refresh the UI after database changes and avoid unnecessary duplicate database requests.
+
+## 12. Smart Features
+
+Add these features to make the application more useful:
+
+- **Quick Add:** Create tasks directly from the dashboard without opening a separate form.
+- **Overdue Detection:** Automatically identify tasks whose due dates have passed and which remain incomplete.
+- **Priority Indicators:** Use distinct visual indicators for high-, medium-, and low-priority tasks.
+- **Daily Focus:** Display a dedicated section for tasks due today.
+- **Task Progress:** Show a visual progress bar for completed versus total tasks.
+- **Dark Mode:** Add a toggle for light and dark themes.
+- **Task Reminders:** Provide an optional reminder interface. Clearly distinguish reminders that are only saved in the database from notifications that are actually delivered. Do not claim that background reminders work unless a notification delivery mechanism is implemented.
+
+## 13. Error Handling and Validation
+
+Implement:
+- Required-field validation.
+- Email and password validation.
+- Task title length limits.
+- Valid date and time handling.
+- Duplicate submission prevention.
+- Loading states for database requests.
+- User-friendly error messages.
+- Retry options when fetching tasks fails.
+- Confirmation dialogs for destructive actions.
+- Authentication error handling.
+
+Do not display raw database errors to users.
+
+## 14. Replit Setup and Supabase Connection
+
+Provide a clear setup process.
+
+1. Create a new React + Vite project in Replit.
+2. Install all required dependencies.
+3. Create a new Supabase project.
+4. Open the Supabase SQL Editor.
+5. Execute the SQL script to create the database tables and RLS policies.
+6. Copy the Supabase project URL and publishable/anonymous key.
+7. Add the following secrets to Replit:
+
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_publishable_or_anon_key
+```
+
+8. Initialize the Supabase client using these environment variables.
+9. Implement registration and login.
+10. Connect task creation, retrieval, editing, and deletion to Supabase.
+11. Test the complete application with at least two separate user accounts to verify data isolation.
+12. Ensure the application works after refreshing the page and reopening the deployed URL.
+
+Never hardcode actual credentials in the source code or commit them to GitHub.
+
+## 15. Testing Requirements
+
+Before completing the project, verify that:
+
+- Registration and login work.
+- Logout works.
+- Tasks are saved in Supabase.
+- Tasks remain available after refreshing the browser.
+- Users can edit and delete their tasks.
+- Task filters and search work correctly.
+- Dashboard statistics reflect actual database records.
+- RLS prevents users from viewing or modifying other users' tasks.
+- The interface works on mobile and desktop.
+- The application builds without errors.
+- No major buttons or navigation links are nonfunctional.
+
+## 16. Final Output
+
+Build the complete working application rather than just generating a design or frontend prototype.
+
+Follow this implementation order:
+1. Set up the React frontend and design system.
+2. Create the Supabase database and security policies.
+3. Integrate Supabase authentication.
+4. Build the task CRUD operations.
+5. Develop the dashboard and filtering.
+6. Add the calendar and analytics.
+7. Implement responsive design and dark mode.
+8. Test all features and fix errors.
+
+**Important instructions:**
+- Do not skip backend integration.
+- Do not replace database operations with browser local storage or mock APIs.
+- Do not generate fake authentication.
+- Do not leave buttons as placeholders.
+- Use clean, modular, beginner-friendly code.
+- If a Supabase secret or configuration is missing, explain exactly what needs to be configured instead of pretending the connection works.
+- Build and test one stage at a time. Show me the files created, explain the Supabase connection, and provide the exact SQL and configuration steps needed to run the application successfully.
+
+The final result should be a fully functional, attractive Smart To-Do List application with a real Supabase backend, ready to demonstrate and deploy from Replit.
