@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Smart To-Do List"
+description = "A personal productivity app for managing tasks, due dates, priorities, calendar views, and progress analytics with Supabase authentication and private per-user data."
+version = "1.0.0"
+id = "artifacts/smart-todo-list"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24278
+
+[services.development]
+run = "pnpm --filter @workspace/smart-todo-list run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/smart-todo-list", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/smart-todo-list/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24278"
+BASE_PATH = "/"
